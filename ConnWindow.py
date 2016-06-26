@@ -78,8 +78,6 @@ class ConnWindow:
 
 
 
-
-
     def place_elements(self):
         self.labelWelcome.place(relx=0.5,
                                 y=100,
@@ -115,4 +113,4 @@ class ConnWindow:
 
     def click(self):
         self.canvas.pack_forget()
-        self.interface.changeWin(GameWindow(self.interface))
+        self.interface.changeWin(GameWindow(self.interface, self.valueTextUser, self.valueTheme))

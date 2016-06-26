@@ -36,7 +36,7 @@ class Partie:
     def whole_game(self):
         answers = []
         for i in range(self.SIZE_PARTIE):
-            answers[i] = self.ask_question(listQuesion[i])
+            answers[i] = self.ask_question(listQuestion[i])
         self.scorePartie = self.calculate_score(answers)
 
     """ Pose une question, renvoie un booléen en fonction de la validité de la

@@ -21,15 +21,24 @@ class GameWindow:
     labelTheme = None
     textBoxUser = None
     listBoxTheme = None
-    button = None
-
+    button1 = None
+    button2 = None
+    button3 = None
+    button4 = None
     valueTextUser = None
     valueThemes = None
 
-    def __init__(self, container):
+    def __init__(self, container, nomJoueur, theme):
         content = Connector.get_themes_db()
         self.question1 = Question1()
         self.container = container
+        self.nomJoueur = str(nomJoueur)
+        self.nomTheme = str(theme)
+
+
+
+
+        """Eléments de la page Question"""
         self.cadre = Frame(container.canvas,
                             bg=self.color)
 
@@ -42,25 +51,33 @@ class GameWindow:
                                     text=self.createNumberMessage(self.question1.number),
                                     bg=self.color)
 
+        self.labelJoueur = Label(self.canvas,
+                                text="Joueur :" + self.nomJoueur,
+                                bg=self.color)
+
+        self.labelTheme = Label(self.canvas,
+                                text="Thème :" + self.nomTheme,
+                                bg=self.color)
+
         self.labelQuestion= Label(self.canvas,
                                     text=self.question1.text,
                                     bg=self.color)
 
         self.button1 = Button(self.canvas,
                                 text=self.question1.reponseList[0],
-                                command=self.click)
+                                command= lambda : self.click(1))
 
         self.button2 = Button(self.canvas,
                                 text=self.question1.reponseList[1],
-                                command=self.click)
+                                command= lambda : self.click(2))
 
         self.button3 = Button(self.canvas,
                                 text=self.question1.reponseList[2],
-                                command=self.click)
+                                command= lambda : self.click(3))
 
         self.button4 = Button(self.canvas,
                                 text=self.question1.bonneReponse,
-                                command=self.click)
+                                command= lambda : self.click(4))
 
         self.place_elements()
         self.place_window()
@@ -82,36 +99,50 @@ class GameWindow:
                                 height=30)
 
         self.labelQuestion.place(x=100,
-                                y=75,
+                                y=50,
                                 width=400,
                                 height=100)
 
-        self.button1.place(relx=0.33,
+        self.labelJoueur.place(x=10,
+                                y=10,
+                                width=100,
+                                height=50)
+
+        self.labelTheme.place(x=10,
+                                y=350,
+                                width=100,
+                                height=50)
+
+        self.button1.place(relx=0.30,
                             y=200,
                             anchor=CENTER,
                             width=200,
-                            height=30)
+                            height=50)
 
-        self.button2.place(relx=0.66,
+
+        self.button2.place(relx=0.70,
                             y=200,
                             anchor=CENTER,
                             width=200,
-                            height=30)
+                            height=50)
 
-        self.button3.place(relx=0.33,
+
+        self.button3.place(relx=0.30,
                             y=280,
                             anchor=CENTER,
                             width=200,
-                            height=30)
+                            height=50)
 
-        self.button4.place(relx=0.66,
+
+        self.button4.place(relx=0.70,
                             y=280,
                             anchor=CENTER,
                             width=200,
-                            height=30)
+                            height=50)
 
-    def click(self):
-        self.destroy()
+    def click(self,number):
+        print(number)
+        """ Numero de la reponse renvoyée"""
 
 
     def createNumberMessage(self, number):

@@ -16,7 +16,7 @@ class Question1:
 
 	""" CONSTRUCTOR """
 	def __init__(self):
-		self.number = 1
+		self.number = 9
 		self.idQuest = 1
 		self.text = "Lorsqu'un pancake prend l'avion à destination \nde Toronto et qu'il fait une escale technique \nà St-Claude, on dit :"
 		self.bonneReponse = "La réponse D"
