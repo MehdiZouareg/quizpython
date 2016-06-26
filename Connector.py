@@ -76,9 +76,10 @@ class Connector:
 	données. """
 	@staticmethod
 	def get_questions_db(chosenTheme):
+		query = """SELECT * FROM question WHERE nomtheme = ?""", (str(chosenTheme),)
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
-		cursor.execute("""SELECT * FROM question WHERE nomtheme = ?""", (str(chosenTheme),))
+		cursor.execute(query)
 		rows = cursor.fetchall()
 		conn.close()
 		return rows
@@ -93,3 +94,24 @@ class Connector:
 		rows = cursor.fetchall()
 		conn.close()
 		return rows
+
+	""" Créé un nouveau thème """
+	@staticmethod
+	def add_theme(newTheme):
+		conn = sqlite3.connect('bdd_quizz.db')
+		cursor = conn.cursor()
+		cursor.execute("""INSERT INTO theme VALUES (?)""", (str(newTheme),))
+		conn.close()
+
+	""" Créé une nouvelle question """
+	@staticmethod
+	def add_question(tab):
+		string = ""
+		#On formate les données à insérer dans la requête
+		for oc in tab:
+			string = string + str(oc) + ", "
+		#On les insère en enlevant l'espace de fin
+		conn = sqlite3.connect('bdd_quizz.db')
+		cursor = conn.cursor()
+		cursor.execute("""INSERT INTO theme VALUES (?)""", (string.strip()))
+		conn.close()
