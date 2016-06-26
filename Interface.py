@@ -26,5 +26,11 @@ class Interface:
                                 width=self.largeur,
                                 height=self.hauteur)
         self.canvas.pack()
-        self.frameLog = ConnWindow(self)
+        self.changeWin(ConnWindow(self))
+
+
+    def changeWin(self, window):
+        print ("Refresh")
+        self.frameLog = window
+        self.frameLog.interface = self
         self.root.mainloop()

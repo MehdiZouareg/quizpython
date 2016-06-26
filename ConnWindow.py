@@ -3,6 +3,8 @@ from tkinter import *
 import tkinter.ttk as ttk
 from Connector import *
 from Partie import *
+from GameWindow import *
+from Interface import *
 
 class ConnWindow:
 
@@ -62,6 +64,10 @@ class ConnWindow:
                                 command=self.click)
         self.place_window()
         self.place_elements()
+        self.canvas.pack()
+
+
+
 
     def place_window(self):
         self.cadre.place(width=self.largeur_c,
@@ -70,7 +76,9 @@ class ConnWindow:
                     rely=0.5,
                     anchor=CENTER)
 
-        self.canvas.pack()
+
+
+
 
     def place_elements(self):
         self.labelWelcome.place(relx=0.5,
@@ -106,5 +114,5 @@ class ConnWindow:
                             height=30)
 
     def click(self):
-        self.container.partie = Partie(self.valueTheme, self.valueTextUser)
-        self.destroy()
+        self.canvas.pack_forget()
+        self.interface.changeWin(GameWindow(self.interface))
