@@ -76,10 +76,10 @@ class Connector:
 	données. """
 	@staticmethod
 	def get_questions_db(chosenTheme):
-		query = """SELECT * FROM question WHERE nomtheme = ?""", (str(chosenTheme),)
+		query = """SELECT * FROM question WHERE nomtheme = ?""", (chosenTheme,)
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
-		cursor.execute(query)
+		cursor.execute("""SELECT * FROM question WHERE nomtheme = ?""", (chosenTheme,))
 		rows = cursor.fetchall()
 		conn.close()
 		return rows
@@ -87,7 +87,7 @@ class Connector:
 	""" Récupère tous les thèmes référencés dans la base de données. """
 	@staticmethod
 	def get_themes_db():
-		query = """SELECT * FROM theme"""
+		query = """SELECT nomtheme FROM theme"""
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
 		cursor.execute(query)
@@ -100,18 +100,15 @@ class Connector:
 	def add_theme(newTheme):
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
-		cursor.execute("""INSERT INTO theme VALUES (?)""", (str(newTheme),))
+		cursor.execute("""INSERT INTO theme (nomtheme) VALUES (?)""", (newTheme,))
+		conn.commit()
 		conn.close()
 
 	""" Créé une nouvelle question """
 	@staticmethod
 	def add_question(tab):
-		string = ""
-		#On formate les données à insérer dans la requête
-		for oc in tab:
-			string = string + str(oc) + ", "
-		#On les insère en enlevant l'espace de fin
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
-		cursor.execute("""INSERT INTO theme VALUES (?)""", (string.strip()))
+		cursor.execute("""INSERT INTO question VALUES (?, :quest, :brep, :rep1, :rep2, :rep3, :theme)""", (None, tab,))
+		conn.commit()
 		conn.close()

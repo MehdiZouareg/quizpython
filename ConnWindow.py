@@ -6,12 +6,6 @@ from Partie import *
 
 class ConnWindow:
 
-        """     """     """
-
-            Menu du jeu
-
-        """     """     """
-
     #Les constantes
     LARGEUR_C = 600
     HAUTEUR_C = 400
@@ -37,6 +31,7 @@ class ConnWindow:
 
     #Box thème
     valueThemes = None
+    themesContent = None
     listBoxTheme = None
 
     #Bouton
@@ -108,10 +103,10 @@ class ConnWindow:
                                     textvariable = self.valueTextUser)
         #Textbox thème
         self.valueTheme = StringVar()
-        content = Connector.get_themes_db()
+        self.themesContent = Connector.get_themes_db()
         self.listBoxTheme = ttk.Combobox(self.canvas,
                                         textvariable=self.valueTheme,
-                                        values=content)
+                                        values=self.themesContent)
         #Boutons
         self.buttonValid = Button(self.canvas,
                                     text="Valider",
@@ -327,32 +322,34 @@ class ConnWindow:
         self.destroy()
 
     def add_content(self):
-        """ Mode ajout de contenu """
+        """ Lancer mode ajout de contenu """
         self.hide_elements_id()
         self.place_elements_content()
 
     def add_theme(self):
         """ Ajouter thème dans bdd """
-        themeToSend = self.valueTextAddTheme.get()
+        themeToSend = str(self.valueTextAddTheme.get())
         if themeToSend:
-            Connector.add_theme(str(themeToSend))
+            Connector.add_theme(themeToSend)
+            self.textBoxAddTheme.delete(0,END)
+            self.themesContent = Connector.get_themes_db()
             self.hide_elements_content()
             self.place_elements_id()
 
     def add_question(self):
         """ Ajouter question dans bdd """
-        array = []
         test = True
-        array.append(str(self.valueTextAddQuestion))
-        array.append(str(self.valueTextAddBonneReponse))
-        array.append(str(self.valueTextAddReponse1))
-        array.append(str(self.valueTextAddReponse2))
-        array.append(str(self.valueTextAddReponse3))
-        array.append(str(self.valueThemes))
-        for oc in array:
+        dict = {'quest':str(self.valueTextAddQuestion),
+                'brep':str(self.valueTextAddBonneReponse),
+                'rep1':str(self.valueTextAddReponse1),
+                'rep2':str(self.valueTextAddReponse2),
+                'rep3':str(self.valueTextAddReponse3),
+                'theme':str(self.valueTheme)}
+        for oc in dict.values():
             if not oc:
                 test = False
         if test:
-            Connector.add_question(array)
+            Connector.add_question(dict)
+            self.valueTheme.delete(0,END)
             self.hide_elements_content()
             self.place_elements_id()
