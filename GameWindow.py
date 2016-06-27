@@ -28,14 +28,13 @@ class GameWindow:
     valueTextUser = None
     valueThemes = None
 
-    def __init__(self, container, nomJoueur, theme):
+    def __init__(self, container, nomJoueur, theme, partie):
+        self.partie = partie
         content = Connector.get_themes_db()
-        self.question1 = Question1()
+        self.question = Question()
         self.container = container
-        self.nomJoueur = str(nomJoueur)
-        self.nomTheme = str(theme)
-
-
+        self.nomJoueur = str(partie.nomJoueur)
+        self.nomTheme = str(partie.nomTheme)
 
 
         """Eléments de la page Question"""
@@ -48,7 +47,7 @@ class GameWindow:
                                 height = self.hauteur_c)
 
         self.labelquestionNumber = Label(self.canvas,
-                                    text=self.createNumberMessage(self.question1.number),
+                                    text=self.createNumberMessage(self.question.number),
                                     bg=self.color)
 
         self.labelJoueur = Label(self.canvas,
@@ -65,24 +64,25 @@ class GameWindow:
 
         self.button1 = Button(self.canvas,
                                 text=self.question1.reponseList[0],
-                                command= lambda : self.click(1))
+                                command= lambda : self.click(self.question.reponseList[0]))
 
         self.button2 = Button(self.canvas,
                                 text=self.question1.reponseList[1],
-                                command= lambda : self.click(2))
+                                command= lambda : self.click(self.question.reponseList[1]))
 
         self.button3 = Button(self.canvas,
                                 text=self.question1.reponseList[2],
-                                command= lambda : self.click(3))
+                                command= lambda : self.click(self.question.reponseList[2]))
 
         self.button4 = Button(self.canvas,
                                 text=self.question1.bonneReponse,
-                                command= lambda : self.click(4))
+                                command= lambda : self.click(self.question.reponseList[3]))
 
         self.place_elements()
         self.place_window()
         self.canvas.pack()
         print ("yes")
+
 
     def place_window(self):
         self.cadre.place(width=self.largeur_c,
@@ -109,7 +109,7 @@ class GameWindow:
                                 height=50)
 
         self.labelTheme.place(x=10,
-                                y=350,
+                                y=300,
                                 width=100,
                                 height=50)
 
@@ -141,7 +141,8 @@ class GameWindow:
                             height=50)
 
     def click(self,number):
-        print(number)
+        self.canvas.pack_forget()
+        self.partie.next_turn(number,
         """ Numero de la reponse renvoyée"""
 
 

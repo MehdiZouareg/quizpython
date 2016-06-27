@@ -2,6 +2,9 @@ import os, sys
 from random import randint
 from Connector import *
 from Question import *
+from Interface import *
+from GameWindow import *
+from EndWindow import *
 
 class Partie:
     """
@@ -21,6 +24,10 @@ class Partie:
     #Le score de la partie
     scorePartie = None
 
+    answers = []
+
+    tour = 0
+
     """ CONSTRUCTOR """
     def __init__(self, theme, joueur):
         self.joueur = joueur
@@ -32,16 +39,22 @@ class Partie:
             nextQuest = Question(questions[fig])
             listQuestion.append(nextQuest)
 
-    """ Déroulement de la partie. """
-    def whole_game(self):
-        answers = []
-        for i in range(self.SIZE_PARTIE):
-            answers[i] = self.ask_question(listQuestion[i])
-        self.scorePartie = self.calculate_score(answers)
+    """ Début de la partie. """
+    def new_game(self, container):
+        self.tour = 1
+        self.container = container
+        changeWin(GameWindow(self.container, self.joueur, self.theme, self))
 
-    """ Pose une question, renvoie un booléen en fonction de la validité de la
-    réponse. """
-    #def ask_question(self, question):
+    """ A chaque tour..."""
+    def next_turn(self, reponse, question):
+        if question.verifReponse(number):
+            answers.append("Bonne réponse !")
+        self.tour += 1
+        if self.tour =< SIZE_PARTIE:
+            changeWin(GameWindow(self.container, self.joueur, self.theme, self))
+        else:
+            changeWin(EndWindow(self.container, self.joueur, self.theme, self))
+
 
     """ Calcule le score à la fin de la partie, renvoie le pourcentage de
     réussite. """

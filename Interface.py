@@ -1,6 +1,7 @@
 import os, sys
 from tkinter import *
 from ConnWindow import *
+from Partie import *
 
 class Interface:
     """

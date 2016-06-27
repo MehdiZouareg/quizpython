@@ -6,7 +6,7 @@ from Partie import *
 from GameWindow import *
 from Interface import *
 
-class ConnWindow:
+class EndWindow:
 
     largeur_c = 600
     hauteur_c = 400
@@ -114,4 +114,4 @@ class ConnWindow:
     def click(self):
         self.canvas.pack_forget()
         self.partie = Partie(self.valueTextUser, self.valueTheme)
-        self.partie.new_game()
+        self.interface.changeWin(GameWindow(self.interface, self.valueTextUser, self.valueTheme))

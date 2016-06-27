@@ -76,10 +76,12 @@ class Connector:
 	données. """
 	@staticmethod
 	def get_questions_db(chosenTheme):
+		print("Get questions")
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
 		cursor.execute("""SELECT * FROM question WHERE nomtheme = ?""", (str(chosenTheme),))
 		rows = cursor.fetchall()
+		print(rows)
 		conn.close()
 		return rows
 
