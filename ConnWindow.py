@@ -25,14 +25,14 @@ class ConnWindow:
     labelPlayer = None
     labelTheme = None
 
-    #Box user
+    #Valeurs
     valueTextUser = None
-    textBoxUser = None
-
-    #Box thème
     valueThemes = None
-    themesContent = None
+
+    #Textbox
     listBoxTheme = None
+    themesContent = None
+    textBoxUser = None
 
     #Bouton
     buttonValid = None
@@ -52,6 +52,7 @@ class ConnWindow:
     labelAddThemeQuest = None
 
     #Valeurs
+    valueTheme = None
     valueTextAddTheme = None
     valueTextAddQuestion = None
     valueTextAddBonneReponse = None
@@ -85,8 +86,6 @@ class ConnWindow:
                                 bg=self.COLOR,
                                 width=self.LARGEUR_C,
                                 height=self.HAUTEUR_C)
-
-        """ Fenêtre de connexion """
         #Labels
         self.labelWelcome = Label(self.canvas,
                                     text="Bienvenue dans le Quizz !",
@@ -97,26 +96,6 @@ class ConnWindow:
         self.labelTheme = Label(self.canvas,
                                       text="Thème choisi :",
                                       bg=self.COLOR)
-        #Textbox user
-        self.valueTextUser = StringVar()
-        self.textBoxUser = Entry(self.canvas,
-                                    textvariable = self.valueTextUser)
-        #Textbox thème
-        self.valueTheme = StringVar()
-        self.themesContent = Connector.get_themes_db()
-        self.listBoxTheme = ttk.Combobox(self.canvas,
-                                        textvariable=self.valueTheme,
-                                        values=self.themesContent)
-        #Boutons
-        self.buttonValid = Button(self.canvas,
-                                    text="Valider",
-                                    command=self.launch_partie)
-        self.buttonAddContent = Button(self.canvas,
-                                        text="Ajouter Contenu",
-                                        command=self.add_content)
-
-        """ Fenêtre d'ajout """
-        #Labels
         self.labelAddTheme = Label(self.canvas,
                                     text="Ajouter un thème :",
                                     bg=self.COLOR)
@@ -139,13 +118,20 @@ class ConnWindow:
                                             text="Attribuer un thème :",
                                             bg=self.COLOR)
         #Valeurs
+        self.valueTextUser = StringVar()
         self.valueTextAddTheme = StringVar()
         self.valueTextAddQuestion = StringVar()
         self.valueTextAddBonneReponse = StringVar()
         self.valueTextAddReponse1 = StringVar()
         self.valueTextAddReponse2 = StringVar()
         self.valueTextAddReponse3 = StringVar()
-        #Textbox
+        #Textbox thème
+        self.themesContent = Connector.get_themes_db()
+        self.listBoxTheme = ttk.Combobox(self.canvas,
+                                        textvariable=self.valueTheme,
+                                        values=self.themesContent)
+        self.textBoxUser = Entry(self.canvas,
+                                    textvariable = self.valueTextUser)
         self.textBoxAddTheme = Entry(self.canvas,
                                     textvariable = self.valueTextAddTheme)
         self.textBoxAddQuestion = Entry(self.canvas,
@@ -158,6 +144,13 @@ class ConnWindow:
                                     textvariable = self.valueTextAddReponse2)
         self.textBoxAddReponse3 = Entry(self.canvas,
                                     textvariable = self.valueTextAddReponse3)
+        #Boutons
+        self.buttonValid = Button(self.canvas,
+                                    text="Valider",
+                                    command=self.launch_partie)
+        self.buttonAddContent = Button(self.canvas,
+                                        text="Ajouter Contenu",
+                                        command=self.add_content)
         self.buttonAddTheme = Button(self.canvas,
                                         text="Ajouter Thème",
                                         command=self.add_theme)
@@ -333,6 +326,7 @@ class ConnWindow:
             Connector.add_theme(themeToSend)
             self.textBoxAddTheme.delete(0,END)
             self.themesContent = Connector.get_themes_db()
+            self.delete_form()
             self.hide_elements_content()
             self.place_elements_id()
 
@@ -351,7 +345,18 @@ class ConnWindow:
                 test = False
         if test:
             Connector.add_question(dict)
-            self.listBoxTheme.delete(0,END)
             self.themesContent = Connector.get_themes_db()
+            self.delete_form()
             self.hide_elements_content()
             self.place_elements_id()
+
+    def delete_form(self):
+        """ Efface tous les formulaires de la page """
+        self.listBoxTheme.delete(0,END)
+        self.textBoxAddTheme.delete(0,END)
+        self.textBoxUser.delete(0,END)
+        self.textBoxAddQuestion.delete(0,END)
+        self.textBoxAddBonneReponse.delete(0,END)
+        self.textBoxAddReponse1.delete(0,END)
+        self.textBoxAddReponse2.delete(0,END)
+        self.textBoxAddReponse3.delete(0,END)
