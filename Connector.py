@@ -60,7 +60,7 @@ class Connector:
 	    cursor.execute("""
 	    CREATE TABLE IF NOT EXISTS question(
 			idquest integer PRIMARY KEY AUTOINCREMENT UNIQUE,
-			textquest varchar(127) UNIQUE,
+			textquest varchar(127),
 			bonnerepquest varchar(127),
 			reponse1 varchar(127),
 			reponse2 varchar(127),
@@ -109,6 +109,6 @@ class Connector:
 	def add_question(tab):
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
-		cursor.execute("""INSERT INTO question VALUES (?, :quest, :brep, :rep1, :rep2, :rep3, :theme)""", (None, tab,))
+		cursor.execute("""INSERT INTO question VALUES (:id, :quest, :brep, :rep1, :rep2, :rep3, :theme)""", tab)
 		conn.commit()
 		conn.close()

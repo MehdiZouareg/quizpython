@@ -339,17 +339,19 @@ class ConnWindow:
     def add_question(self):
         """ Ajouter question dans bdd """
         test = True
-        dict = {'quest':str(self.valueTextAddQuestion),
-                'brep':str(self.valueTextAddBonneReponse),
-                'rep1':str(self.valueTextAddReponse1),
-                'rep2':str(self.valueTextAddReponse2),
-                'rep3':str(self.valueTextAddReponse3),
-                'theme':str(self.valueTheme)}
-        for oc in dict.values():
-            if not oc:
+        dict = {'id':None,
+                'quest':self.valueTextAddQuestion.get(),
+                'brep':self.valueTextAddBonneReponse.get(),
+                'rep1':self.valueTextAddReponse1.get(),
+                'rep2':self.valueTextAddReponse2.get(),
+                'rep3':self.valueTextAddReponse3.get(),
+                'theme':self.valueTheme.get()}
+        for cle, oc in dict.items():
+            if cle != 'id' and not oc:
                 test = False
         if test:
             Connector.add_question(dict)
-            self.valueTheme.delete(0,END)
+            self.listBoxTheme.delete(0,END)
+            self.themesContent = Connector.get_themes_db()
             self.hide_elements_content()
             self.place_elements_id()
