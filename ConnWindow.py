@@ -31,7 +31,7 @@ class ConnWindow:
 
     #Textbox
     listBoxTheme = None
-    themesContent = None
+    themesContent = []
     textBoxUser = None
 
     #Bouton
@@ -126,7 +126,9 @@ class ConnWindow:
         self.valueTextAddReponse2 = StringVar()
         self.valueTextAddReponse3 = StringVar()
         #Textbox thème
-        self.themesContent = Connector.get_themes_db()
+        themes = Connector.get_themes_db()
+        for elem in themes:
+            self.themesContent.append(str(elem[0]))
         self.listBoxTheme = ttk.Combobox(self.canvas,
                                         textvariable=self.valueTheme,
                                         values=self.themesContent)
