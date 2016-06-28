@@ -125,6 +125,7 @@ class ConnWindow:
         self.valueTextAddReponse1 = StringVar()
         self.valueTextAddReponse2 = StringVar()
         self.valueTextAddReponse3 = StringVar()
+        self.valueTheme = StringVar()
         #Textbox thème
         themes = Connector.get_themes_db()
         for elem in themes:
