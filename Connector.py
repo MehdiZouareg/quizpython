@@ -60,7 +60,7 @@ class Connector:
 	    cursor.execute("""
 	    CREATE TABLE IF NOT EXISTS question(
 			idquest integer PRIMARY KEY AUTOINCREMENT UNIQUE,
-			textquest varchar(127) UNIQUE,
+			textquest varchar(127),
 			bonnerepquest varchar(127),
 			reponse1 varchar(127),
 			reponse2 varchar(127),
@@ -76,10 +76,10 @@ class Connector:
 	données. """
 	@staticmethod
 	def get_questions_db(chosenTheme):
-		print("Get questions")
+		query = """SELECT * FROM question WHERE nomtheme = ?""", (chosenTheme,)
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
-		cursor.execute("""SELECT * FROM question WHERE nomtheme = ?""", (str(chosenTheme),))
+		cursor.execute("""SELECT * FROM question WHERE nomtheme = ?""", (chosenTheme,))
 		rows = cursor.fetchall()
 		conn.close()
 		return rows
@@ -87,10 +87,28 @@ class Connector:
 	""" Récupère tous les thèmes référencés dans la base de données. """
 	@staticmethod
 	def get_themes_db():
-		query = """SELECT * FROM theme"""
+		query = """SELECT nomtheme FROM theme"""
 		conn = sqlite3.connect('bdd_quizz.db')
 		cursor = conn.cursor()
 		cursor.execute(query)
 		rows = cursor.fetchall()
 		conn.close()
 		return rows
+
+	""" Créé un nouveau thème """
+	@staticmethod
+	def add_theme(newTheme):
+		conn = sqlite3.connect('bdd_quizz.db')
+		cursor = conn.cursor()
+		cursor.execute("""INSERT INTO theme (nomtheme) VALUES (?)""", (newTheme,))
+		conn.commit()
+		conn.close()
+
+	""" Créé une nouvelle question """
+	@staticmethod
+	def add_question(tab):
+		conn = sqlite3.connect('bdd_quizz.db')
+		cursor = conn.cursor()
+		cursor.execute("""INSERT INTO question VALUES (:id, :quest, :brep, :rep1, :rep2, :rep3, :theme)""", tab)
+		conn.commit()
+		conn.close()
