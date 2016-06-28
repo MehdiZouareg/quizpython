@@ -25,9 +25,6 @@ class Question:
 			print("Rang:" + str(i) + ". Reponse:" + row[i])
 			self.reponseList.append(row[i])
 
-
-
-
 	def verifReponse(self, reponse):
 		if(reponse == self.bonneReponse):
 			print("Bonne reponse")

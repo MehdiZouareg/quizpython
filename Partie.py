@@ -33,9 +33,9 @@ class Partie:
     def __init__(self, theme, joueur):
         self.joueur = joueur
         self.theme = theme
-        questions = Connector.get_questions_db("canada")
-        print(questions)
+        questions = Connector.get_questions_db(theme)
         size = len(questions) - 1
+        print(size)
         for i in range(self.SIZE_PARTIE):
             rand = randint(0, size)
             nextQuest = Question(questions[rand])

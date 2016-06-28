@@ -10,7 +10,7 @@ class ConnWindow:
 
     largeur_c = 600
     hauteur_c = 400
-    color = "#99693C"
+    color = "#90C3D4"
 
     container = None
     cadre = None
