@@ -9,9 +9,9 @@ from Interface import *
 class ConnWindow:
 
 
-    largeur_c = 600
-    hauteur_c = 400
-    color = "#90C3D4"
+    LARGEUR_C = 600
+    HAUTEUR_C = 400
+    COLOR = "#90C3D4"
 
 
     #Les fenêtres
@@ -323,10 +323,10 @@ class ConnWindow:
 
 
     def launch_partie(self):
-        """ Lancer la partie """
-            self.canvas.pack_forget()
-            self.partie = Partie(self.valueTextUser, self.valueTheme)
-            self.partie.new_game(self.container)
+        """Lancer la partie """
+        self.canvas.pack_forget()
+        self.partie = Partie(self.valueTextUser, self.valueTheme)
+        self.partie.new_game(self.container)
 
     def add_content(self):
         """ Lancer mode ajout de contenu """
