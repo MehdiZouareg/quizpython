@@ -3,7 +3,7 @@ from tkinter import *
 import tkinter.ttk as ttk
 from Connector import *
 from Partie import *
-from Question1 import *
+from Question import *
 
 class GameWindow:
 
@@ -11,30 +11,12 @@ class GameWindow:
     hauteur_c = 400
     color = "#A1D490"
 
-
-    container = None
-    cadre = None
-    canvas = None
-
-    labelWelcome = None
-    labelPlayer = None
-    labelTheme = None
-    textBoxUser = None
-    listBoxTheme = None
-    button1 = None
-    button2 = None
-    button3 = None
-    button4 = None
-    valueTextUser = None
-    valueThemes = None
-
-    def __init__(self, container, nomJoueur, theme, partie, question):
+    def __init__(self, container, partie, question):
         self.partie = partie
         self.question = question
         self.container = container
         self.nomJoueur = str(partie.joueur)
         self.nomTheme = str(partie.theme)
-
 
         """Eléments de la page Question"""
         self.cadre = Frame(container.canvas,
@@ -74,14 +56,12 @@ class GameWindow:
                                 command= lambda : self.click(self.question.reponseList[2]))
 
         self.button4 = Button(self.canvas,
-                                text=self.question.bonneReponse[3],
+                                text=self.question.bonneReponse,
                                 command= lambda : self.click(self.question.reponseList[3]))
 
         self.place_elements()
         self.place_window()
         self.canvas.pack()
-        print ("yes")
-
 
     def place_window(self):
         self.cadre.place(width=self.largeur_c,

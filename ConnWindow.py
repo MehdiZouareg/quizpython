@@ -5,6 +5,7 @@ from Connector import *
 from Partie import *
 from GameWindow import *
 from Interface import *
+from EndWindow import *
 
 class ConnWindow:
 
@@ -13,68 +14,10 @@ class ConnWindow:
     HAUTEUR_C = 400
     COLOR = "#90C3D4"
 
-
-    #Les fenêtres
-    container = None
-    cadre = None
-    canvas = None
-
     """                                 """
     """     Attributs : Connexion       """
     """                                 """
-
-    #Labels
-    labelWelcome = None
-    labelPlayer = None
-    labelTheme = None
-
-    #Valeurs
-    valueTextUser = None
-    valueThemes = None
-
-    #Textbox
-    listBoxTheme = None
     themesContent = []
-    textBoxUser = None
-
-    #Bouton
-    buttonValid = None
-    buttonAddContent = None
-
-    """                                      """
-    """     Attributs : Ajout de contenu     """
-    """                                      """
-
-    #Labels
-    labelAddTheme = None
-    labelAddQuestion = None
-    labelAddBonneReponse = None
-    labelAddReponse1 = None
-    labelAddReponse2 = None
-    labelAddReponse3 = None
-    labelAddThemeQuest = None
-
-    #Valeurs
-    valueTheme = None
-    valueTextAddTheme = None
-    valueTextAddQuestion = None
-    valueTextAddBonneReponse = None
-    valueTextAddReponse1 = None
-    valueTextAddReponse2 = None
-    valueTextAddReponse3 = None
-
-    #Textbox
-    textBoxAddTheme = None
-    textBoxAddQuestion = None
-    textBoxAddBonneReponse = None
-    textBoxAddReponse1 = None
-    textBoxAddReponse2 = None
-    textBoxAddReponse3 = None
-
-    #Boutons
-    buttonAddTheme = None
-    buttonAddQuestion = None
-
 
     """                     """
     """     Constructeur    """
@@ -82,6 +25,7 @@ class ConnWindow:
 
     def __init__(self, container):
         #Attributs liés à la fenêtre
+        self.themesContent = []
         self.container = container
         self.cadre = Frame(container.canvas,
                             bg=self.COLOR)
@@ -128,6 +72,7 @@ class ConnWindow:
         self.valueTextAddReponse1 = StringVar()
         self.valueTextAddReponse2 = StringVar()
         self.valueTextAddReponse3 = StringVar()
+        self.valueTheme = StringVar()
         #Textbox thème
         themes = Connector.get_themes_db()
         for elem in themes:
@@ -166,10 +111,6 @@ class ConnWindow:
         self.place_window()
         self.place_elements_id()
         self.canvas.pack()
-
-
-
-
 
 
 
@@ -325,7 +266,9 @@ class ConnWindow:
     def launch_partie(self):
         """Lancer la partie """
         self.canvas.pack_forget()
-        self.partie = Partie(self.valueTextUser, self.valueTheme)
+        self.themeChoisi = str(self.valueTheme.get())
+        self.joueur = str(self.valueTextUser.get())
+        self.partie = Partie(self.themeChoisi, self.joueur)
         self.partie.new_game(self.container)
 
     def add_content(self):

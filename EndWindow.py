@@ -5,6 +5,7 @@ from Connector import *
 from Partie import *
 from GameWindow import *
 from Interface import *
+import ConnWindow as conn
 
 class EndWindow:
 
@@ -12,22 +13,9 @@ class EndWindow:
     hauteur_c = 400
     color = "#99693C"
 
-    container = None
-    cadre = None
-    canvas = None
-
-    labelWelcome = None
-    labelPlayer = None
-    labelTheme = None
-    textBoxUser = None
-    listBoxTheme = None
-    button = None
-
-    valueTextUser = None
-    valueThemes = None
-
-    def __init__(self, container):
+    def __init__(self, container, partie):
         self.container = container
+        self.partie = partie
         self.cadre = Frame(container.canvas,
                             bg=self.color)
 
@@ -35,10 +23,6 @@ class EndWindow:
                                 bg=self.color,
                                 width=self.largeur_c,
                                 height = self.hauteur_c)
-
-        self.labelWelcome = Label(self.canvas,
-                                    text="Bienvenue dans le Quizz !",
-                                    bg=self.color)
 
         self.labelPlayer= Label(self.canvas,
                                     text="Nom du joueur :",
@@ -48,16 +32,11 @@ class EndWindow:
                                     text="Thème choisi :",
                                     bg=self.color)
 
+        self.resultat = StringVar()
+        self.labelResultat = Label(self.canvas,
+                                        text=self.resultat,
+                                        bg=self.color)
 
-        self.valueTextUser = StringVar()
-        self.textBoxUser = Entry(self.canvas,
-                                    textvariable = self.valueTextUser)
-
-        self.valueTheme = StringVar()
-        content = Connector.get_themes_db()
-        self.listBoxTheme = ttk.Combobox(self.canvas,
-                                        textvariable=self.valueTheme,
-                                        values=content)
 
         self.button = Button(self.canvas,
                                 text="Valider",
@@ -66,8 +45,8 @@ class EndWindow:
         self.place_elements()
         self.canvas.pack()
 
-
-
+    def afficher_resultat(self):
+        self.resultat.set("Votre résultat est de  : ", self.partie.calculate_score())
 
     def place_window(self):
         self.cadre.place(width=self.largeur_c,
@@ -76,15 +55,7 @@ class EndWindow:
                     rely=0.5,
                     anchor=CENTER)
 
-
-
     def place_elements(self):
-        self.labelWelcome.place(relx=0.5,
-                                y=100,
-                                anchor=CENTER,
-                                width=200,
-                                height=30)
-
         self.labelPlayer.place(x=80,
                                 y=155,
                                 width=200,
@@ -95,15 +66,6 @@ class EndWindow:
                                 width=200,
                                 height=30)
 
-        self.textBoxUser.place(x=250,
-                                y=150,
-                                width=200,
-                                height=30)
-
-        self.listBoxTheme.place(x=250,
-                                y=200,
-                                width=200,
-                                height=30)
 
         self.button.place(relx=0.5,
                             y=280,
@@ -111,7 +73,12 @@ class EndWindow:
                             width=150,
                             height=30)
 
+        self.labelResultat.place(relx=0.5,
+                            rely=0.5,
+                            anchor=CENTER,
+                            width=200,
+                            height=30)
+
     def click(self):
         self.canvas.pack_forget()
-        self.partie = Partie(self.valueTextUser, self.valueTheme)
-        self.interface.changeWin(GameWindow(self.interface, self.valueTextUser, self.valueTheme))
+        self.interface.changeWin(conn.ConnWindow(self.interface))

@@ -11,13 +11,6 @@ class Interface:
     largeur = 800
     hauteur = 500
 
-    canvas = None
-    root = None
-
-    frameLog = None
-
-    partie = None
-
     def __init__(self):
         self.root = Tk()
         self.root.title = "Quizz"
