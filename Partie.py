@@ -34,10 +34,11 @@ class Partie:
         self.joueur = joueur
         self.theme = theme
         questions = Connector.get_questions_db("canada")
+        print(questions)
         size = len(questions) - 1
         for i in range(self.SIZE_PARTIE):
-            fig = randint(0, size)
-            nextQuest = Question(questions[fig])
+            rand = randint(0, size)
+            nextQuest = Question(questions[rand])
             self.listQuestion.append(nextQuest)
 
     """ Début de la partie. """
