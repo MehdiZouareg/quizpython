@@ -31,7 +31,6 @@ class Interface:
 
 
     def changeWin(self, window):
-        print ("Refresh")
         self.frameLog = window
         self.frameLog.interface = self
         self.root.mainloop()

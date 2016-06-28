@@ -114,4 +114,4 @@ class ConnWindow:
     def click(self):
         self.canvas.pack_forget()
         self.partie = Partie(self.valueTextUser, self.valueTheme)
-        self.partie.new_game()
+        self.partie.new_game(self.container)

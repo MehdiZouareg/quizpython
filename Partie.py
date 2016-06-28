@@ -1,5 +1,6 @@
 import os, sys
-from random import randint
+import random
+from random import *
 from Connector import *
 from Question import *
 from Interface import *
@@ -32,28 +33,29 @@ class Partie:
     def __init__(self, theme, joueur):
         self.joueur = joueur
         self.theme = theme
-        questions = Connector.get_questions_db(theme)
-        size = len(questions)
+        questions = Connector.get_questions_db("canada")
+        size = len(questions) - 1
         for i in range(self.SIZE_PARTIE):
             fig = randint(0, size)
             nextQuest = Question(questions[fig])
-            listQuestion.append(nextQuest)
+            self.listQuestion.append(nextQuest)
 
     """ Début de la partie. """
     def new_game(self, container):
-        self.tour = 1
+        self.tour = 0
+        self.question = self.listQuestion[self.tour]
         self.container = container
-        changeWin(GameWindow(self.container, self.joueur, self.theme, self))
+        self.container.changeWin(GameWindow(self.container, self.joueur, self.theme, self, self.question))
 
     """ A chaque tour..."""
     def next_turn(self, reponse, question):
-        if question.verifReponse(number):
-            answers.append("Bonne réponse !")
+        if question.verifReponse(reponse):
+            self.answers.append("Bonne réponse !")
         self.tour += 1
-        if self.tour =< SIZE_PARTIE:
-            changeWin(GameWindow(self.container, self.joueur, self.theme, self))
+        if self.tour <= self.SIZE_PARTIE:
+            self.container.changeWin(GameWindow(self.container, self.joueur, self.theme, self, self.listQuestion[self.tour]))
         else:
-            changeWin(EndWindow(self.container, self.joueur, self.theme, self))
+            self.container.changeWin(EndWindow(self.container, self.joueur, self.theme, self))
 
 
     """ Calcule le score à la fin de la partie, renvoie le pourcentage de
